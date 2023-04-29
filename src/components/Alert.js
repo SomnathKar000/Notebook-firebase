@@ -1,7 +1,23 @@
 import React from "react";
+import { useNoteContext } from "../contexts/note-context";
+import { Stack, Snackbar, Alert } from "@mui/material";
 
-const Alert = () => {
-  return <div>Alert</div>;
+const AlertInfo = () => {
+  const { closeAlert, alert } = useNoteContext();
+
+  return (
+    <Stack spacing={2} sx={{ width: "100%" }}>
+      <Snackbar open={alert.open} autoHideDuration={6000} onClose={closeAlert}>
+        <Alert
+          onClose={closeAlert}
+          severity={alert.type}
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
+    </Stack>
+  );
 };
 
-export default Alert;
+export default AlertInfo;

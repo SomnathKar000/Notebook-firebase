@@ -6,11 +6,13 @@ import {
   createTheme,
   Container,
 } from "@mui/material";
-import Homepage from "./pages/HomePage";
+import Homepage from "./pages/NotebookPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import Navbar from "./components/Navbar";
-import { useNoteContext } from "./contexts/noteContext";
+import Loading from "./components/Loading";
+import Alert from "./components/Alert";
+import { useNoteContext } from "./contexts/note-context";
 
 function App() {
   const { mode } = useNoteContext();
@@ -24,6 +26,8 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Navbar />
+        <Loading />
+        <Alert />
         <Container maxWidth="xl" sx={{ marginY: 3 }}>
           <Routes>
             <Route element={<Homepage />} path="/" />

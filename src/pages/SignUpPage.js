@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { Box, FormControl, TextField, Typography, Button } from "@mui/material";
 
 const isValidEmail = (email) => {
@@ -24,7 +25,7 @@ const SignUpPage = () => {
         component="form"
         sx={{
           marginX: "17%",
-          marginY: 15,
+          marginY: 20,
           display: "flex",
           flexDirection: "column",
           gap: 4,
@@ -37,6 +38,9 @@ const SignUpPage = () => {
         <Button type="submit" variant="contained">
           Submit
         </Button>
+        <Typography textAlign="center" varient="p">
+          Already registered ?<Link to="/login">sign in</Link>
+        </Typography>
       </FormControl>
     </Box>
   );
