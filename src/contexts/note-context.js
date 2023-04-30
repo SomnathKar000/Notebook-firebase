@@ -41,27 +41,39 @@ export const NoteContextProvider = ({ children }) => {
   const addNote = async (uid, note) => {
     const noteBookRef = doc(db, "notebook", uid);
     try {
-      await setDoc(noteBookRef, {
-        note: [...note],
-      });
+      await setDoc(noteBookRef, { note: note });
       openAlert("Note added successfully", "success");
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
+  const getUser = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch({ type: "UPDATE_USER", payload: user });
+        return true;
       } else {
         dispatch({ type: "LOGOUT_USER" });
+        return true;
       }
     });
+  };
+
+  useEffect(() => {
+    getUser();
   }, []);
   return (
     <NoteContext.Provider
-      value={{ ...state, openAlert, closeAlert, changeMode, LogOut, addNote }}
+      value={{
+        ...state,
+        getUser,
+        openAlert,
+        closeAlert,
+        changeMode,
+        LogOut,
+        addNote,
+      }}
     >
       {children}
     </NoteContext.Provider>

@@ -1,12 +1,15 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { Box, FormControl, TextField, Typography, Button } from "@mui/material";
 import { useNoteContext } from "../contexts/note-context";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
-  const { openAlert } = useNoteContext();
+  const history = useNavigate();
+
+  const { openAlert, user } = useNoteContext();
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -35,6 +38,7 @@ const SignUpPage = () => {
       console.log(error);
     }
   };
+
   return (
     <Box>
       <Typography textAlign="center" variant="h3">

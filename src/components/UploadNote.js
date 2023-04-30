@@ -3,7 +3,7 @@ import { Box, TextField, Button, InputBase, FormControl } from "@mui/material";
 import { useNoteContext } from "../contexts/note-context";
 
 const UploadNote = () => {
-  const { user, addNote, openAlert } = useNoteContext();
+  const { user, addNote, openAlert, notes } = useNoteContext();
   const titleRef = useRef("");
   const contentRef = useRef("");
   const timestampRef = useRef("");
@@ -25,9 +25,10 @@ const UploadNote = () => {
       openAlert("Enter a valid timestamp", "error");
       return;
     }
-    const note = { title, content, timestamp };
 
-    addNote(user.uid, note);
+    const newNote = [...notes, { title, content, timestamp }];
+
+    addNote(user.uid, newNote);
   };
   return (
     <FormControl

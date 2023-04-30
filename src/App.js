@@ -15,12 +15,13 @@ import Alert from "./components/Alert";
 import { useNoteContext } from "./contexts/note-context";
 
 function App() {
-  const { mode } = useNoteContext();
+  const { mode, user } = useNoteContext();
   const theme = createTheme({
     palette: {
       mode: mode,
     },
   });
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
