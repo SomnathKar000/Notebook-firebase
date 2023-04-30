@@ -61,7 +61,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Navbar = () => {
-  const { mode, changeMode } = useNoteContext();
+  const { mode, changeMode, user, LogOut } = useNoteContext();
   const searchInputRef = useRef("");
   // const onChange = (e) => {
   //   SearchImages(searchInputRef.current.value);
@@ -84,6 +84,8 @@ const Navbar = () => {
               fontWeight: 700,
               color: "inherit",
               textDecoration: "none",
+              flexGrow: 1,
+              display: { xs: "none", sm: "block" },
             }}
           >
             Notebook
@@ -98,9 +100,15 @@ const Navbar = () => {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <Link to="/login">
-            <Typography>Login</Typography>
-          </Link>
+          {Object.keys(user).length === 0 ? (
+            <Button color="inherit" href="/login">
+              Login
+            </Button>
+          ) : (
+            <Button color="inherit" onClick={LogOut}>
+              Log out
+            </Button>
+          )}
           <Tooltip title={`Enable ${mode === "light" ? "dark" : "light"} mode`}>
             <IconButton onClick={changeMode} sx={{ color: "white" }}>
               {mode === "dark" ? (

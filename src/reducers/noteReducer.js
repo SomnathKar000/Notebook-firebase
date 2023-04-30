@@ -27,6 +27,12 @@ const noteReducer = (state, action) => {
     }
     return { ...state, mode };
   }
+  if (action.type === "UPDATE_USER") {
+    return { ...state, user: { ...action.payload } };
+  }
+  if (action.type === "LOGOUT_USER") {
+    return { ...state, user: {} };
+  }
 
   return { ...state };
 };
