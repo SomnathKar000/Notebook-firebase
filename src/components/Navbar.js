@@ -16,6 +16,7 @@ import {
   AppBar,
 } from "@mui/material";
 import { useNoteContext } from "../contexts/note-context";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -58,6 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+  const history = useNavigate();
   const { mode, changeMode, user, LogOut, searchNote } = useNoteContext();
   const searchInputRef = useRef("");
   const onChange = (e) => {
@@ -98,7 +100,12 @@ const Navbar = () => {
             />
           </Search>
           {Object.keys(user).length === 0 ? (
-            <Button color="inherit" href="/login">
+            <Button
+              color="inherit"
+              onClick={() => {
+                history("/login");
+              }}
+            >
               Login
             </Button>
           ) : (
