@@ -34,7 +34,7 @@ const LoginPage = () => {
     if (Object.keys(user).length !== 0) {
       history("/");
     }
-  }, [user]);
+  }, [user, history]);
 
   return (
     <Box>
