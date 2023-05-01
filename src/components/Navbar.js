@@ -1,9 +1,6 @@
 import React, { useRef } from "react";
 import { styled, alpha } from "@mui/material/styles";
-import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
-import FilterBAndWIcon from "@mui/icons-material/FilterBAndW";
-import FilterVintageIcon from "@mui/icons-material/FilterVintage";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import BookIcon from "@mui/icons-material/Book";
@@ -85,7 +82,6 @@ const Navbar = () => {
               color: "inherit",
               textDecoration: "none",
               flexGrow: 1,
-              display: { xs: "none", sm: "block" },
             }}
           >
             Notebook

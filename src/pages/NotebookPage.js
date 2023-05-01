@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import AllNotes from "../components/AllNotes";
 import UploadNote from "../components/UploadNote";
 

@@ -37,7 +37,7 @@ const SignUpPage = () => {
     if (Object.keys(user).length !== 0) {
       history("/");
     }
-  }, []);
+  }, [user]);
 
   return (
     <Box>
