@@ -25,19 +25,19 @@ const SignUpPage = () => {
       return;
     }
     try {
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
+      await createUserWithEmailAndPassword(auth, email, password);
+      history("/");
       openAlert("Login success full welcome ", "success");
-      console.log(result);
     } catch (error) {
       openAlert(error.message, "error");
       console.log(error);
     }
   };
+  useEffect(() => {
+    if (Object.keys(user).length !== 0) {
+      history("/");
+    }
+  }, []);
 
   return (
     <Box>

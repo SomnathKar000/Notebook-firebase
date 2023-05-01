@@ -31,7 +31,21 @@ const noteReducer = (state, action) => {
     return { ...state, user: { ...action.payload } };
   }
   if (action.type === "LOGOUT_USER") {
-    return { ...state, user: {} };
+    return { ...state, user: {}, notes: [], searchedNotes: [] };
+  }
+  if (action.type === "GET_ALL_NOTES") {
+    const notes = [...action.payload];
+    return { ...state, notes, searchedNotes: notes };
+  }
+  if (action.type === "REMOVE_ALL_NOTES") {
+    return { ...state, notes: [], searchedNotes: [] };
+  }
+  if (action.type === "SEARCH_NOTES") {
+    const title = action.payload;
+    const notes = [...state.searchedNotes].filter((item) =>
+      item.title.toLowerCase().startsWith(title.toLowerCase())
+    );
+    return { ...state, notes };
   }
 
   return { ...state };

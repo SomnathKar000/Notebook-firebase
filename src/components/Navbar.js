@@ -61,11 +61,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Navbar = () => {
-  const { mode, changeMode, user, LogOut } = useNoteContext();
+  const { mode, changeMode, user, LogOut, searchNote } = useNoteContext();
   const searchInputRef = useRef("");
-  // const onChange = (e) => {
-  //   SearchImages(searchInputRef.current.value);
-  // };
+  const onChange = (e) => {
+    searchNote(searchInputRef.current.value);
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -95,6 +95,7 @@ const Navbar = () => {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              onChange={onChange}
               inputRef={searchInputRef}
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}

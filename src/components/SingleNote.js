@@ -1,37 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography, Tooltip, IconButton, Paper } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useNoteContext } from "../contexts/note-context";
+import Model from "./Model";
 
 const SingleNote = (props) => {
-  const timestamp = "NOOO New Today";
-  const content =
-    "As the sun began to set over the horizon, the sky turned a beautiful shade of pink and orange. The air was cool and crisp, and a gentle breeze blew through the trees, rustling the leaves. Birds chirped in the distance, singing their evening songs. A group of children played on the nearby playground, laughing and shouting as they ran around. In the distance, a dog barked, adding to the peaceful ambiance of the evening. It was a beautiful moment, one that would be remembered for years to come.";
-  const title = "New note";
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const { deleteANote } = useNoteContext();
+  const index = props.index;
+  const { timestamp, content, title } = props.note;
 
   return (
     <Box>
-      <Paper>
-        <Box p={2}>
-          <Typography variant="h4">{title}</Typography>
-          <Typography variant="p">{content}</Typography>
-          <Typography variant="caption" display="block">
+      <Paper elevation={6}>
+        <Box p={2} sx={{ display: "flex", flexDirection: "column" }}>
+          <Typography gutterBottom variant="h5" component="div">
+            {title}
+          </Typography>
+
+          <Typography variant="body2" color="text.secondary">
+            {content}
+          </Typography>
+          <Typography sx={{ marginTop: 1 }} variant="caption" display="block">
             {timestamp}
           </Typography>
         </Box>
-        <Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Tooltip title="Edit This note">
-            <IconButton>
+            <IconButton onClick={handleOpen}>
               <EditIcon />
             </IconButton>
           </Tooltip>
+
           <Tooltip title="Delete this note">
-            <IconButton>
+            <IconButton
+              onClick={() => {
+                deleteANote(index);
+              }}
+            >
               <DeleteIcon />
             </IconButton>
           </Tooltip>
         </Box>
       </Paper>
+      <Model
+        handleClose={handleClose}
+        open={open}
+        index={index}
+        note={props.note}
+      />
     </Box>
   );
 };

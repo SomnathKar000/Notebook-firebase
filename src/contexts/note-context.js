@@ -2,7 +2,7 @@ import { useContext, createContext, useReducer, useEffect } from "react";
 import reducer from "../reducers/noteReducer";
 import { auth, db } from "../utils/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, onSnapshot } from "firebase/firestore";
 const initialState = {
   user: {},
   mode: "light",
@@ -13,6 +13,7 @@ const initialState = {
     message: "Enter valid details",
   },
   notes: [],
+  searchedNotes: [],
 };
 
 const NoteContext = createContext();
@@ -34,16 +35,17 @@ export const NoteContextProvider = ({ children }) => {
 
   const LogOut = () => {
     signOut(auth);
-    dispatch("LOGOUT_USER");
+    dispatch({ type: "LOGOUT_USER" });
     openAlert("logout successfully", "success");
   };
 
-  const addNote = async (uid, note) => {
-    const noteBookRef = doc(db, "notebook", uid);
+  const addNote = async (note) => {
+    const noteBookRef = doc(db, "notebook", state.user.uid);
     try {
-      await setDoc(noteBookRef, { note: note });
-      openAlert("Note added successfully", "success");
+      await setDoc(noteBookRef, { note: [...note] });
+      openAlert("Successful", "success");
     } catch (error) {
+      openAlert(error.message, "error");
       console.log(error);
     }
   };
@@ -60,9 +62,44 @@ export const NoteContextProvider = ({ children }) => {
     });
   };
 
+  const updateANote = (index, note) => {
+    const newNote = [
+      ...state.notes.slice(0, index),
+      note,
+      ...state.notes.slice(index + 1),
+    ];
+    console.log(newNote);
+    addNote(newNote);
+  };
+  const deleteANote = (index) => {
+    const newNote = [
+      ...state.notes.slice(0, index),
+      ...state.notes.slice(index + 1),
+    ];
+    addNote(newNote);
+  };
+
+  const searchNote = (title) => {
+    dispatch({ type: "SEARCH_NOTES", payload: title });
+  };
+
   useEffect(() => {
     getUser();
-  }, []);
+
+    if (Object.keys(state.user).length !== 0) {
+      dispatch({ type: "START_LOADING" });
+      const notebookRef = doc(db, "notebook", state.user.uid);
+      onSnapshot(notebookRef, (notes) => {
+        if (notes.exists()) {
+          dispatch({ type: "CLOSE_LOADING" });
+          dispatch({ type: "GET_ALL_NOTES", payload: notes.data().note });
+        } else {
+          dispatch({ type: "CLOSE_LOADING" });
+          dispatch({ type: "REMOVE_ALL_NOTES" });
+        }
+      });
+    }
+  }, [Object.keys(state.user).length]);
   return (
     <NoteContext.Provider
       value={{
@@ -73,6 +110,9 @@ export const NoteContextProvider = ({ children }) => {
         changeMode,
         LogOut,
         addNote,
+        deleteANote,
+        updateANote,
+        searchNote,
       }}
     >
       {children}

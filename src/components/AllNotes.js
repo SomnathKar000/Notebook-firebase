@@ -1,14 +1,26 @@
 import React from "react";
 import SingleNote from "./SingleNote";
-import { Box } from "@mui/material";
 import styled from "styled-components";
+import { useNoteContext } from "../contexts/note-context";
+import Loading from "./Loading";
 
 const AllNotes = () => {
-  const arr = [1, 2, 3, 5, 6, 7, 8, 9];
+  const { notes, loading } = useNoteContext();
+
+  if (loading) {
+    return (
+      <Wrapper>
+        {Array.from({ length: 4 }).map((item, index) => (
+          <Loading key={index} />
+        ))}
+      </Wrapper>
+    );
+  }
   return (
+    // {loading?}
     <Wrapper>
-      {arr.map((item, index) => {
-        return <SingleNote key={index} />;
+      {notes.map((item, index) => {
+        return <SingleNote key={index} note={item} index={index} />;
       })}
     </Wrapper>
   );

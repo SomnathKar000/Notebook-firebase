@@ -1,9 +1,11 @@
 import React, { useRef } from "react";
-import { Box, TextField, Button, InputBase, FormControl } from "@mui/material";
+import { TextField, Button, FormControl } from "@mui/material";
 import { useNoteContext } from "../contexts/note-context";
+import { useNavigate } from "react-router-dom";
 
 const UploadNote = () => {
-  const { user, addNote, openAlert, notes } = useNoteContext();
+  const history = useNavigate();
+  const { addNote, openAlert, notes, user } = useNoteContext();
   const titleRef = useRef("");
   const contentRef = useRef("");
   const timestampRef = useRef("");
@@ -21,14 +23,21 @@ const UploadNote = () => {
       openAlert("Enter a valid content", "error");
       return;
     }
-    if (timestamp.length < 3) {
+    if (timestamp.length < 2) {
       openAlert("Enter a valid timestamp", "error");
       return;
     }
 
     const newNote = [...notes, { title, content, timestamp }];
-
-    addNote(user.uid, newNote);
+    if (Object.keys(user).length === 0) {
+      openAlert("Login Required", "error");
+      history("/login");
+      return;
+    }
+    addNote(newNote);
+    titleRef.current.value = "";
+    contentRef.current.value = "";
+    timestampRef.current.value = "";
   };
   return (
     <FormControl

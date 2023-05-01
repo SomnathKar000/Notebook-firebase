@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const history = useNavigate();
-  const { openAlert } = useNoteContext();
+  const { openAlert, user } = useNoteContext();
   const emailRef = useRef("");
   const passwordRef = useRef("");
 
@@ -22,14 +22,19 @@ const LoginPage = () => {
       return;
     }
     try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
+      history("/");
       openAlert("Login successful", "success");
-      console.log(result);
     } catch (error) {
       openAlert(error.message, "error");
       console.log(error);
     }
   };
+  useEffect(() => {
+    if (Object.keys(user).length !== 0) {
+      history("/");
+    }
+  }, []);
 
   return (
     <Box>

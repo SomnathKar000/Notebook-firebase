@@ -27,7 +27,6 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Navbar />
-        <Loading />
         <Alert />
         <Container maxWidth="xl" sx={{ marginY: 3 }}>
           <Routes>
