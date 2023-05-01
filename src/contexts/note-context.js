@@ -99,7 +99,7 @@ export const NoteContextProvider = ({ children }) => {
         }
       });
     }
-  }, [Object.keys(state.user).length]);
+  }, [state.user]);
   return (
     <NoteContext.Provider
       value={{
