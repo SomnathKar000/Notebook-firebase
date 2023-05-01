@@ -30,8 +30,11 @@ const LoginPage = () => {
       console.log(error);
     }
   };
+
+  const shouldRedirect = Object.keys(user).length !== 0;
+
   useEffect(() => {
-    if (Object.keys(user).length !== 0) {
+    if (shouldRedirect) {
       history("/");
     }
   }, [user, history]);

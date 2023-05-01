@@ -1,4 +1,10 @@
-import { useContext, createContext, useReducer, useEffect } from "react";
+import {
+  useContext,
+  useCallback,
+  createContext,
+  useReducer,
+  useEffect,
+} from "react";
 import reducer from "../reducers/noteReducer";
 import { auth, db } from "../utils/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -62,6 +68,16 @@ export const NoteContextProvider = ({ children }) => {
     });
   };
 
+  // const getUser = useCallback(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       dispatch({ type: "SET_USER", payload: user });
+  //     } else {
+  //       dispatch({ type: "REMOVE_USER" });
+  //     }
+  //   });
+  // }, [dispatch]);
+
   const updateANote = (index, note) => {
     const newNote = [
       ...state.notes.slice(0, index),
@@ -83,6 +99,8 @@ export const NoteContextProvider = ({ children }) => {
     dispatch({ type: "SEARCH_NOTES", payload: title });
   };
 
+  const shouldRedirect = Object.keys(state.user).length !== 0;
+
   useEffect(() => {
     getUser();
 
@@ -99,7 +117,7 @@ export const NoteContextProvider = ({ children }) => {
         }
       });
     }
-  }, [Object.keys(state.user).length !== 0]);
+  }, [shouldRedirect]);
   return (
     <NoteContext.Provider
       value={{
