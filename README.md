@@ -40,6 +40,6 @@ Contributions are welcome! If you have any suggestions, bug reports, or feature 
 
 For more information or questions, feel free to reach out:
 
-- Email: your-email@example.com
-- LinkedIn: [Your Name](https://www.linkedin.com/in/somnath-kar-aa73aa1a3)
-- GitHub: [Your GitHub Username](https://github.com/SomnathKar000
+- Email: somnathkar2023@gmail.com
+- LinkedIn: [Somnath Kar](https://www.linkedin.com/in/somnath-kar-aa73aa1a3)
+- GitHub: [SomnathKar000](https://github.com/SomnathKar000
