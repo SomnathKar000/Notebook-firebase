@@ -1,6 +1,6 @@
 # Notebook App
 
-[![Website](https://github-production-user-asset-6210df.s3.amazonaws.com/108184610/245452955-ddff3de0-e930-420f-b316-bacdbe74dca7.png)
+![Website](https://github-production-user-asset-6210df.s3.amazonaws.com/108184610/245452955-ddff3de0-e930-420f-b316-bacdbe74dca7.png)
 
 ## Description
 
